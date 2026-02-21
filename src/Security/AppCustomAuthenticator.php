@@ -66,11 +66,7 @@ class AppCustomAuthenticator extends AbstractLoginFormAuthenticator
             $route = $user->getRedirectToRoute();
         }
 
-        $locale = null;
-        if ($route !== 'app_page_main') {
-            $locale = ['_locale' => $request->getLocale()];
-        }
-
+        $locale = ['_locale' => $request->getLocale()];
         return new RedirectResponse($this->urlGenerator->generate($route, $locale));
     }
 
@@ -90,31 +86,15 @@ class AppCustomAuthenticator extends AbstractLoginFormAuthenticator
     {
         $result = 'app_page_main';
         $config = $this->parameterBag->get('user');
-        if (!empty($config['redirect_route']['default_route'])) {
-            $result = $config['redirect_route']['default_route'];
-        }
 
-        $allSiteConfig = [];
-        $activeSiteConfig = [];
-
-        if (empty($config['redirect_to_after_login']['rules'])) {
-            return $result;
-        }
-
-        foreach ($config['redirect_to_after_login']['rules'] as $rule) {
-            if (empty($rule['site_id'])) {
-                $allSiteConfig = $rule;
-            } elseif ($rule['site_id'] === $activeSiteDto->id) {
-                $activeSiteConfig = $rule;
+        foreach ($config as $item) {
+            if (empty($item['site']['id'])
+                || $item['site']['id'] !==  $activeSiteDto->id
+                || empty($item['site']['redirect_to_after_login']['default_route'])
+            ) {
+                continue;
             }
-        }
-
-        if (empty($activeSiteConfig)) {
-            $activeSiteConfig = $allSiteConfig;
-        }
-
-        if (!empty(array_intersect($activeSiteConfig['roles'], $roles)) && !empty($activeSiteConfig['route'])) {
-            $result = $activeSiteConfig['route'];
+            return $item['site']['redirect_to_after_login']['default_route'];
         }
 
         return $result;
