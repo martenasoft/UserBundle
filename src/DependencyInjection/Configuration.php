@@ -2,8 +2,10 @@
 
 namespace MartenaSoft\UserBundle\DependencyInjection;
 
+use MartenaSoft\CommonLibrary\Dictionary\DictionarySite;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
+use MartenaSoft\CommonLibrary\Dictionary\DictionaryUser;
 
 class Configuration implements ConfigurationInterface
 {
@@ -13,22 +15,31 @@ class Configuration implements ConfigurationInterface
         $rootNode = $treeBuilder->getRootNode();
 
         $rootNode
+            ->arrayPrototype()
             ->children()
-                ->arrayNode('redirect_to_after_login')
+                ->arrayNode('site')
                     ->isRequired()
                     ->children()
-
-                        ->scalarNode('default_route')
-                            ->info('Default route after login if no rule matches')
-                            ->isRequired()
-                            ->cannotBeEmpty()
+                        ->integerNode('id')
+                            ->defaultValue(DictionarySite::DEFAULT_SITE_ID)
                         ->end()
 
-                        ->arrayNode('rules')
-                            ->arrayPrototype()
-                                ->children()
-                                    ->arrayNode('roles')
-                                        ->scalarPrototype()->end()
+                        ->arrayNode('redirect_to_after_login')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->scalarNode('default_route')
+                                    ->defaultValue(DictionaryUser::REDIRECT_TO_AFTER_LOGIN)
+                                    ->cannotBeEmpty()
+                                ->end()
+                            ->end()
+                        ->end()
+
+                    ->arrayNode('rules')
+                        ->arrayPrototype()
+                            ->children()
+                                ->arrayNode('roles')
+                                    ->scalarPrototype()->end()
+                                        ->isRequired()
                                         ->requiresAtLeastOneElement()
                                     ->end()
 
@@ -36,17 +47,13 @@ class Configuration implements ConfigurationInterface
                                         ->isRequired()
                                         ->cannotBeEmpty()
                                     ->end()
-
-                                    ->integerNode('site_id')
-                                        ->defaultValue(0)
-                                    ->end()
                                 ->end()
                             ->end()
                         ->end()
-
                     ->end()
                 ->end()
-            ->end();
+            ->end()
+        ;
 
         return $treeBuilder;
     }
