@@ -3,14 +3,13 @@
 namespace MartenaSoft\UserBundle\Security;
 
 
-use MartenaSoft\SiteBundle\Dto\ActiveSiteDto;
+use MartenaSoft\CommonLibrary\Dto\ActiveSiteDto;
 use MartenaSoft\UserBundle\Entity\RedirectToInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Http\Authenticator\AbstractLoginFormAuthenticator;

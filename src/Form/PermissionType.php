@@ -3,18 +3,13 @@
 namespace MartenaSoft\UserBundle\Form;
 
 
-use MartenaSoft\CommonLibrary\Dictionary\DictionaryUser;
 use MartenaSoft\UserBundle\Entity\Permission;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Security\Core\Role;
-use Symfony\Bridge\Doctrine\Security\User;
 use MartenaSoft\UserBundle\Service\RouteService;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\Choice;
 
 class PermissionType extends AbstractType
 {
