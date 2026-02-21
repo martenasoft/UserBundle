@@ -17,6 +17,7 @@
     "minimum-stability": "stable",
     "require": {
         "symfonycasts/reset-password-bundle": "^1.24",
-        "symfonycasts/verify-email-bundle": "^1.18"
+        "symfonycasts/verify-email-bundle": "^1.18",
+        "martenasoft/common_library": "^1.0"
     }
 }
