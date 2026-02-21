@@ -22,6 +22,7 @@ class Configuration implements ConfigurationInterface
                     ->children()
                         ->integerNode('id')
                             ->defaultValue(DictionarySite::DEFAULT_SITE_ID)
+                            ->cannotBeEmpty()
                         ->end()
 
                         ->arrayNode('redirect_to_after_login')
