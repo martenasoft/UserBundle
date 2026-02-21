@@ -1,0 +1,19 @@
+{
+    "name": "martenasoft/user_bundle",
+    "description": "MartenaSoft UserBundle",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "MartenaSoft\\UserBundle\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "MartenaSoft",
+            "email": "martena.soft@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {}
+}

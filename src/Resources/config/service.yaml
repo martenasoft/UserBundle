@@ -1,0 +1,19 @@
+parameters:
+    superadmin_password: '%env(resolve:SUPERADMIN_PASSWORD)%'
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    MartenaSoft\UserBundle\:
+        resource: '../../../src/'
+        exclude:
+            - '../../../src/DependencyInjection/'
+            - '../../../src/Entity/'
+
+
+    MartenaSoft\UserBundle\Security\SuperAdminProvider:
+        arguments:
+            $email: '%env(resolve:SUPERADMIN_EMAIL)%'
+            $passwordHash: '%env(resolve:SUPERADMIN_PASSWORD)%'
