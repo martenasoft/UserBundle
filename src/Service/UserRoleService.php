@@ -2,7 +2,7 @@
 
 namespace MartenaSoft\UserBundle\Service;
 
-use MartenaSoft\SiteBundle\Dto\ActiveSiteDto;
+use MartenaSoft\CommonLibrary\Dto\ActiveSiteDto;
 use MartenaSoft\UserBundle\Entity\Role;
 use MartenaSoft\UserBundle\Entity\User;
 use MartenaSoft\UserBundle\Repository\RoleRepository;

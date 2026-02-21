@@ -4,7 +4,7 @@ namespace MartenaSoft\UserBundle\Manager;
 
 use MartenaSoft\CommonLibrary\Dictionary\DictionaryUser;
 use MartenaSoft\CommonLibrary\Helper\StringHelper;
-use MartenaSoft\SiteBundle\Dto\ActiveSiteDto;
+use MartenaSoft\CommonLibrary\Dto\ActiveSiteDto;
 use MartenaSoft\UserBundle\Entity\User;
 use MartenaSoft\UserBundle\Event\SavedUserEvent;
 use MartenaSoft\UserBundle\Repository\UserRepository;

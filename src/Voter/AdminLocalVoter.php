@@ -5,7 +5,7 @@ namespace MartenaSoft\UserBundle\Voter;
 use Doctrine\Common\Collections\Collection;
 use MartenaSoft\CommonLibrary\Dictionary\DictionaryUser;
 use MartenaSoft\CommonLibrary\Entity\Interfaces\AuthorInterface;
-use MartenaSoft\SiteBundle\Dto\ActiveSiteDto;
+use MartenaSoft\CommonLibrary\Dto\ActiveSiteDto;
 use MartenaSoft\UserBundle\Entity\Permission;
 use MartenaSoft\UserBundle\Repository\PermissionRepository;
 use Psr\Log\LoggerInterface;
