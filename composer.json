@@ -37,6 +37,6 @@
         "symfony/validator": "^8.0",
         "doctrine/doctrine-bundle": "^3.2",
         "symfony/form": "^8.0",
-        "martenasoft/sdk_bundle": "^1.0"
+        "martenasoft/sdk_bundle": "^2.0"
     }
 }
