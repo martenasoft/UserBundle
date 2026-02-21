@@ -1,0 +1,84 @@
+{% extends '@Admin/' ~ app.request.attributes.get('active_site').templatePath ~ '/base.html.twig' %}
+
+{% block title %}{{ 'Permissions items' | trans}} ({{ pagination.getTotalItemCount }}) {% endblock %}
+{% block h1 %}{{ 'Permissions items' | trans}} ({{ pagination.getTotalItemCount }}) {% endblock %}
+
+{% block h1_right %}
+    {% include '@Admin/' ~ app.request.attributes.get('active_site').templatePath ~ '/_view_admin_sub_menu.html.twig' with {
+        createButtonTitle: 'Create permission',
+        createButtonPath: path('app_permission_admin_new'),
+        items: [
+            {
+                title: 'Users',
+                path: path('app_user_admin_index'),
+                titleCreate: 'Create',
+                pathCreate: path('app_user_admin_new')
+            },
+            {
+                title: 'Roles',
+                path: path('app_role_admin_index'),
+                titleCreate: 'Create',
+                pathCreate: path('app_role_admin_new')
+            },
+        ]
+    }%}
+{% endblock %}
+
+{% block breadcrumbs %}
+    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('app_page_main') }}">{{ 'Home' | trans }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('admin_main') }}">{{ 'Admin' | trans }}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ 'Permissions items' | trans}}</li>
+        </ol>
+    </nav>
+{% endblock %}
+{% block body %}
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>{{ 'Name' | trans }}</th>
+                <th>{{ 'Route' | trans }}</th>
+                <th>{{ 'Roles' | trans }}</th>
+                <th class="text-end"></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for permission in pagination %}
+            <tr>
+
+                <td>{{ permission.name }}</td>
+                <td>{{ permission.route }}</td>
+                <td>
+                    {% for role in permission.roles %}
+                        {{ role.name }}
+
+                    {% else %}
+                        {% include '@Admin/' ~ app.request.attributes.get('active_site').templatePath ~ '/no_records_founds.html.twig' with {
+                            message: 'No route found',
+                            createRecordText: 'Create route',
+                            createRecordRoute: path('app_role_admin_new')
+                        } %}
+                    {% endfor %}
+                </td>
+                <td class="text-end">
+                    <a class="btn btn-outline-secondary" href="{{ path('app_permission_admin_show', {'uuid': permission.uuid}) }}">{{ 'Show' | trans }}</a>
+                    <a class="btn btn-outline-secondary" href="{{ path('app_permission_admin_edit', {'uuid': permission.uuid}) }}">{{ 'Edit' | trans }}</a>
+                    <a class="btn btn-outline-danger" href="{{ path('app_permission_admin_delete', {'uuid': permission.uuid}) }}" onclick="return confirm('Delete this permission?');">{{ 'Delete' | trans }}</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">
+                    {% include '@Site/' ~ app.request.attributes.get('active_site').templatePath ~ '/no_records_founds.html.twig' %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="navigation">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+{% endblock %}
