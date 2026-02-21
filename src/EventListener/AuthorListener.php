@@ -2,13 +2,11 @@
 
 namespace MartenaSoft\UserBundle\EventListener;
 
-use Doctrine\ORM\Event\PreFlushEventArgs;
 use Doctrine\Bundle\DoctrineBundle\Attribute\AsDoctrineListener;
 use Doctrine\ORM\Event\PrePersistEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\ORM\Events;
 use MartenaSoft\CommonLibrary\Entity\Interfaces\AuthorInterface;
-use MartenaSoft\UserBundle\Entity\SuperAdminUser;
 use Symfony\Bundle\SecurityBundle\Security;
 
 #[AsDoctrineListener(event: Events::prePersist)]

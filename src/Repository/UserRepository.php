@@ -2,9 +2,7 @@
 
 namespace MartenaSoft\UserBundle\Repository;
 
-use Doctrine\ORM\Query\Expr;
 use MartenaSoft\CommonLibrary\Dictionary\DictionaryUser;
-use MartenaSoft\ImageBundle\Entity\Image;
 use MartenaSoft\UserBundle\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;

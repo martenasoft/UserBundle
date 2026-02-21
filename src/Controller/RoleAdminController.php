@@ -4,7 +4,7 @@ namespace MartenaSoft\UserBundle\Controller;
 
 use MartenaSoft\CommonLibrary\Dictionary\DictionaryMessage;
 use MartenaSoft\CommonLibrary\Helper\StringHelper;
-use MartenaSoft\SiteBundle\Dto\ActiveSiteDto;
+use MartenaSoft\CommonLibrary\Dto\ActiveSiteDto;
 use MartenaSoft\UserBundle\Entity\Role;
 use MartenaSoft\UserBundle\Form\RoleType;
 use MartenaSoft\UserBundle\Repository\RoleRepository;

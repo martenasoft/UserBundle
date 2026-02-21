@@ -4,7 +4,6 @@ namespace MartenaSoft\UserBundle\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use MartenaSoft\UserBundle\Entity\Permission;
-use MartenaSoft\UserBundle\Entity\Role;
 use MartenaSoft\UserBundle\Entity\User;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
