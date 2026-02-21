@@ -15,5 +15,8 @@
         }
     ],
     "minimum-stability": "stable",
-    "require": {}
+    "require": {
+        "symfonycasts/reset-password-bundle": "^1.24",
+        "symfonycasts/verify-email-bundle": "^1.18"
+    }
 }
