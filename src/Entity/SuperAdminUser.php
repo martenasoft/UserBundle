@@ -19,7 +19,7 @@ class SuperAdminUser implements
     private int $id = 0;
     private Uuid|null $uuid =  null;
 
-    private string $redirectToRoute = '';
+    private string $redirectToRoute = 'admin_main';
 
     public function __construct(
         private string $email,
