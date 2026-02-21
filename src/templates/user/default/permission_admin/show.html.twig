@@ -1,0 +1,76 @@
+{% extends '@Admin/' ~ app.request.attributes.get('active_site').templatePath ~ '/base.html.twig' %}
+
+{% block title %}{{ 'Permission' | trans }}{% endblock %}
+{% block h1 %}{{ 'Permission' | trans }}{% endblock %}
+{% block h1_right %}
+    {% include '@Admin/' ~ app.request.attributes.get('active_site').templatePath ~ '/_view_admin_sub_menu.html.twig' with {
+        createButtonTitle: 'Create permission',
+        createButtonPath: path('app_permission_admin_new'),
+        items: [
+            {
+                title: 'Permission',
+                path: path('app_permission_admin_index'),
+                subItems: [
+                    {
+                        title: 'Edit',
+                        path: path('app_permission_admin_edit', {uuid: permission.uuid})
+                    },
+                    {
+                        title: 'Delete',
+                        path: path('app_permission_admin_delete', {uuid: permission.uuid}),
+                        attr: "onclick='return confirm(\"Delete permission?\")'"
+                    }
+                ]
+            },
+            {
+                title: 'Users',
+                path: path('app_user_admin_index'),
+                titleCreate: 'Create',
+                pathCreate: path('app_user_admin_new')
+            },
+            {
+                title: 'Roles',
+                path: path('app_role_admin_index'),
+                titleCreate: 'Create',
+                pathCreate: path('app_role_admin_new')
+            },
+        ]
+    }%}
+{% endblock %}
+{% block breadcrumbs %}
+    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('app_page_main') }}">{{ 'Home' | trans }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('admin_main') }}">{{ 'Admin' | trans }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('app_permission_admin_index') }}">{{ 'Permissions items' | trans}}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ 'Show' | trans }} {{ 'permission' | trans }}</li>
+        </ol>
+    </nav>
+{% endblock %}
+{% block body %}
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>{{ 'Uuid' | trans }}</th>
+                <td>{{ permission.uuid }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'Name' | trans }}</th>
+                <td>{{ permission.name }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'Preview' | trans }}</th>
+                <td>{{ permission.preview }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'Route' | trans }}</th>
+                <td>{{ permission.route }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="row mt-3">
+        <div class="col-6"><a href="{{ path('app_permission_admin_index') }}" class="btn btn-secondary">{{'Cancel' | trans}}</a></div>
+
+    </div>
+
+{% endblock %}

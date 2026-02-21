@@ -1,0 +1,52 @@
+{% extends '@Site/' ~ app.request.attributes.get('active_site').templatePath ~ '/base.html.twig' %}
+
+{% block title %}{{ 'Register' | trans }}{% endblock %}
+{% block h1 %}{{ 'Register' | trans }}{% endblock %}
+
+{% block body %}
+    {% for flash_error in app.flashes('verify_email_error') %}
+        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+    {% endfor %}
+    {% form_theme registrationForm 'bootstrap_5_layout.html.twig' %}
+    <div class="container d-flex align-items-center justify-center-center">
+        <div class="card p-3 w-50">
+            <div class="card-body">
+
+                <div class="centered-block form-container">
+                    <div class="form-group">
+
+                        {{ form_errors(registrationForm) }}
+
+                        {{ form_start(registrationForm) }}
+                        <div class="form-group">
+                            {{ form_row(registrationForm.email) }}
+                        </div>
+                        <div class="form-group">
+                            {{ form_row(registrationForm.plainPassword, {
+                                label: 'Password'
+                            }) | trans|raw }}
+                        </div>
+                        <div class="form-group">
+                            {{ form_row(registrationForm.agreeTerms) }}
+                        </div>
+
+
+                        <hr>
+                        <div class="row">
+                            <div class="col-6">
+                                <a href="{{ path('app_login') }}">{{ 'Log in' | trans }}</a>
+                            </div>
+                            <div class="col-6 text-end">
+                                <button class="btn btn-lg btn-primary" type="submit">
+                                    {{ 'Register in' | trans }}
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                    {{ form_end(registrationForm) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends '@Admin/' ~ app.request.attributes.get('active_site').templatePath ~ '/base.html.twig' %}
+
+{% block title %}{{ 'New' | trans }} {{ 'Role' | trans }}{% endblock %}
+{% block h1 %}{{ 'New' | trans }} {{ 'Role' | trans }}{% endblock %}
+
+{% block h1_right %}
+    {% include '@Admin/' ~ app.request.attributes.get('active_site').templatePath ~ '/_view_admin_sub_menu.html.twig' with {
+        createButtonTitle: 'Create role',
+        createButtonPath: path('app_role_admin_new'),
+        items: [
+            {
+                title: 'Roles',
+                path: path('app_role_admin_index')
+            },
+            {
+                title: 'Users',
+                path: path('app_user_admin_index'),
+                titleCreate: 'Create',
+                pathCreate: path('app_user_admin_new')
+            },
+            {
+                title: 'Roles',
+                path: path('app_role_admin_index'),
+                titleCreate: 'Create',
+                pathCreate: path('app_role_admin_new')
+            },
+        ]
+    }%}
+{% endblock %}
+{% block breadcrumbs %}
+    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('app_page_main') }}">{{ 'Home' | trans }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('admin_main') }}">{{ 'Admin' | trans }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('app_role_admin_index') }}">{{ 'Roles items' | trans }}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ 'New' | trans }} {{ 'Role' | trans }}</li>
+        </ol>
+    </nav>
+{% endblock %}
+{% block body %}
+
+    {% include '@User/' ~ app.request.attributes.get('active_site').templatePath ~ '/role_admin/_form.html.twig' %}
+
+{% endblock %}

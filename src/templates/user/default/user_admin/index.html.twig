@@ -1,0 +1,79 @@
+{% extends '@Admin/' ~ app.request.attributes.get('active_site').templatePath ~ '/base.html.twig' %}
+
+{% block title %}{{ 'User' | trans }} {{ 'index' | trans }} ({{ pagination.getTotalItemCount }}) {% endblock %}
+{% block h1 %}{{ 'User' | trans }} {{ 'index' | trans }} ({{ pagination.getTotalItemCount }}) {% endblock %}
+{% block h1_right %}
+
+    {% include '@Admin/' ~ app.request.attributes.get('active_site').templatePath ~ '/_view_admin_sub_menu.html.twig' with {
+        createButtonTitle: 'Create user',
+        createButtonPath: path('app_user_admin_new'),
+        items: [
+            {
+                title: 'Roles',
+                path: path('app_role_admin_index'),
+                titleCreate: 'Create',
+                pathCreate: path('app_role_admin_new')
+            },
+            {
+                title: 'Permissions',
+                path: path('app_permission_admin_new'),
+                titleCreate: 'Create',
+                pathCreate: path('app_permission_admin_new')
+            },
+        ]
+    }%}
+{% endblock %}
+
+{% block breadcrumbs %}
+    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('app_page_main') }}">{{ 'Home' | trans }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('admin_main') }}">{{ 'Admin' | trans }}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ 'Users items' | trans }}</li>
+        </ol>
+    </nav>
+{% endblock %}
+
+{% block body %}
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>{{ 'Email' | trans }}</th>
+                <th>{{ 'Roles' | trans }}</th>
+                <th>{{ 'Status' | trans }}</th>
+
+                <th>{{ 'Is Verified' | trans }}</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in pagination %}
+            <tr>
+                <td>{{ user.email }}</td>
+                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+                <td class="text-center">{{ (constant('MartenaSoft\\CommonLibrary\\Dictionary\\DictionaryUser::STATUSES')[user.status] ?? '') | trans }}
+                    {{ (user.password is empty ? 'Empty password!') | trans }}</td>
+                <td>{{ (user.isVerified ? 'Yes' : 'No') | trans }}</td>
+                <td class="text-end">
+                    <a class="btn btn-outline-secondary" href="{{ path('app_user_profile', {'uuid': user.uuid}) }}">{{ 'Show' | trans }}</a>
+                    <a class="btn btn-outline-secondary" href="{{ path('app_user_update', {'uuid': user.uuid}) }}">{{ 'Edit' | trans }}</a>
+                    <a class="btn btn-outline-danger" href="{{ path('app_user_profile_delete', {'uuid': user.uuid}) }}" onclick="return confirm('Delete this user');">
+                        {{ 'Delete' | trans }}
+                    </a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">
+                    {% include '@Admin/' ~ app.request.attributes.get('active_site').templatePath ~ '/no_records_founds.html.twig' %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="navigation">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+{% endblock %}

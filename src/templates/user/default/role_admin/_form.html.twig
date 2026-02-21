@@ -1,0 +1,12 @@
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
+{{ form_start(form, {attr:{id:'role-form'}}) }}
+    {{ form_row(form.name) }}
+    {{ form_row(form.permissions) }}
+<hr>
+<div class="row mt-3">
+    <div class="col-6"><a href="{{ path('app_role_admin_index') }}" class="btn btn-secondary">{{'Cancel' | trans}}</a></div>
+    <div class="col-6 text-end">
+        <button class="btn btn-primary" type="submit">{{'Save' | trans}}</button>
+    </div>
+</div>
+{{ form_end(form) }}

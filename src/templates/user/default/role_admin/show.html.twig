@@ -1,0 +1,79 @@
+{% extends '@Admin/' ~ app.request.attributes.get('active_site').templatePath ~ '/base.html.twig' %}
+
+{% block title %}{{ 'Role' | trans }}{% endblock %}
+{% block h1 %}{{ 'Role' | trans }}{% endblock %}
+{% block h1_right %}
+    {% include '@Admin/' ~ app.request.attributes.get('active_site').templatePath ~ '/_view_admin_sub_menu.html.twig' with {
+        createButtonTitle: 'Create role',
+        createButtonPath: path('app_role_admin_new'),
+        items: [
+            {
+                title: 'Roles',
+                path: path('app_role_admin_index'),
+                subItems: [
+                {
+                    title: 'Edit',
+                    path: path('app_role_admin_edit', {uuid: role.uuid})
+                },
+                {
+                    title: 'Delete',
+                    path: path('app_role_admin_delete', {uuid: role.uuid}),
+                    attr: "onclick='return confirm(\"Delete role?\")'"
+                }
+            ]
+            },
+            {
+                title: 'Users',
+                path: path('app_user_admin_index'),
+                titleCreate: 'Create',
+                pathCreate: path('app_user_admin_new')
+            },
+            {
+                title: 'Permissions',
+                path: path('app_permission_admin_new'),
+                titleCreate: 'Create',
+                pathCreate: path('app_role_admin_new')
+            },
+        ]
+    }%}
+{% endblock %}
+
+{% block breadcrumbs %}
+    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('app_page_main') }}">{{ 'Home' | trans }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('admin_main') }}">{{ 'Admin' | trans }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('app_role_admin_index') }}">{{ 'Roles items' | trans }}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ 'Show' | trans }} {{ 'Role' | trans }}</li>
+        </ol>
+    </nav>
+{% endblock %}
+
+{% block body %}
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>{{ 'Uuid' | trans }}</th>
+                <td class="text-end">{{ role.uuid }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'Name' | trans }}</th>
+                <td class="text-end">{{ role.name }}</td>
+            </tr>
+            <tr>
+                <th>{{ 'Permissions' | trans }}</th>
+                <td>
+                    <ul>
+                    {% for permission in role.permissions %}
+                        <li>{{ permission.name }} <i>{{ permission.route }}</i></li>
+                    {% endfor %}
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="row mt-3">
+        <div class="col-6"><a href="{{ path('app_role_admin_index') }}" class="btn btn-secondary">{{'Cancel' | trans}}</a></div>
+    </div>
+{% endblock %}

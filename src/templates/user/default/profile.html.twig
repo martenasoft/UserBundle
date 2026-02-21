@@ -1,0 +1,195 @@
+{% extends '@'~('ROLE_SUPER_ADMIN' in app.user.roles ? 'Admin' : 'Site')~'/' ~ app.request.attributes.get('active_site').templatePath ~ '/base.html.twig' %}
+
+
+{% block title %}{{ 'User' | trans }}  {% endblock %}
+{% block h1 %}{{ 'User' | trans }} {% endblock %}
+{% block h1_right %}
+    {% if 'ROLE_SUPER_ADMIN' in app.user.roles  %}
+        {% include '@Admin/' ~ app.request.attributes.get('active_site').templatePath ~ '/_view_admin_sub_menu.html.twig' with {
+            createButtonTitle: 'Create user',
+            createButtonPath: path('app_user_admin_new'),
+            items: [
+                {
+                    title: 'Users',
+                    path: path('app_user_admin_index'),
+                    subItems: [
+                    {
+                        title: 'Edit',
+                        path: path('app_user_update', {uuid: user.uuid})
+                    },
+                    {
+                        title: 'Photo',
+                        path: path('admin_index_image', {type: 'user', parentUuid: user.uuid}),
+                        titleCreate: 'Create',
+                        pathCreate: path('admin_create_image', {type: 'user', parentUuid: user.uuid})
+                    },
+                    {
+                        title: 'Change password',
+                        path: path('app_user_profile_change_password', {uuid: user.uuid})
+                    },
+                    {
+                        title: 'Delete',
+                        path: path('app_user_profile_safe_delete', {uuid: user.uuid}),
+                        attr: "onclick='return confirm(\"Delete user?\")'"
+                    }
+                ]
+                },
+                {
+                    title: 'Roles',
+                    path: path('app_role_admin_index'),
+                    titleCreate: 'Create',
+                    pathCreate: path('app_role_admin_new')
+                },
+                {
+                    title: 'Permissions',
+                    path: path('app_permission_admin_new'),
+                    titleCreate: 'Create',
+                    pathCreate: path('app_permission_admin_new')
+                },
+            ]
+        }%}
+    {% else %}
+        {% include '@Admin/' ~ app.request.attributes.get('active_site').templatePath ~ '/_view_admin_sub_menu.html.twig' with {
+            createButtonTitle: 'Create user',
+            createButtonPath: path('app_user_admin_new'),
+            items: [
+                {
+                    title: 'Users',
+                    path: path('app_user_admin_index'),
+                    subItems: [
+                    {
+                        title: 'Edit',
+                        path: path('app_user_update', {uuid: user.uuid})
+                    },
+                    {
+                        title: 'Photo',
+                        path: path('admin_index_image', {type: 'user', parentUuid: user.uuid}),
+                        titleCreate: 'Create',
+                        pathCreate: path('admin_create_image', {type: 'user', parentUuid: user.uuid})
+                    },
+                    {
+                        title: 'Change password',
+                        path: path('app_user_profile_change_password', {uuid: user.uuid})
+                    },
+                    {
+                        title: 'Delete',
+                        path: path('app_user_profile_safe_delete', {uuid: user.uuid}),
+                        attr: "onclick='return confirm(\"Delete user?\")'"
+                    }
+                ]
+                },
+
+            ]
+        }%}
+    {% endif %}
+{% endblock %}
+
+
+{% block breadcrumbs %}
+    {% if 'ROLE_SUPER_ADMIN' in app.user.roles  %}
+    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('app_page_main') }}">{{ 'Home' | trans }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('admin_main') }}">{{ 'Admin' | trans }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('app_user_admin_index') }}">{{ 'Users items' | trans }}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ 'Profile' | trans }}</li>
+        </ol>
+    </nav>
+    {% else %}
+        <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ path('app_page_main') }}">{{ 'Home' | trans }}</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{ 'Profile' | trans }}</li>
+            </ol>
+        </nav>
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-3">
+            {% if images|length == 0 %}
+                <img src="{{ null|image(app.request.attributes.get('active_site'), 'small', constant('MartenaSoft\\CommonLibrary\\Dictionary\\ImageDictionary::TYPE_USER_INDEX')) }}" class="d-block w-100" alt="{{ user.email }}">
+            {% elseif images|length == 1 %}
+                <img src="{{ images[0]|image(app.request.attributes.get('active_site'), 'small') }}" class="d-block w-100" alt="{{ user.email }}">
+            {% else %}
+
+                    <div id="carouselOnUserProfile" class="carousel slide">
+                        <div class="carousel-inner">
+                {% for imageItem in images %}
+                            <div class="carousel-item {{ imageItem.isMain ? 'active' }}">
+                                <img src="{{ imageItem|image(app.request.attributes.get('active_site'), 'small') }}" class="d-block w-100" alt="{{ user.email }}">
+                            </div>
+                {% endfor %}
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselOnUserProfile" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselOnUserProfile" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+            {% endif %}
+        </div>
+        <div class="col-9">
+
+            <table class="table">
+                <tbody>
+                <tr>
+                    <th>{{ 'Uuid' | trans }}</th>
+                    <td class="text-end">{{ user.uuid }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'Email' | trans }}</th>
+                    <td class="text-end">{{ user.email }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'Roles' | trans }}</th>
+                    <td class="text-end">{{ user.roles ? user.roles|json_encode : '' }}</td>
+                </tr>
+
+                <tr>
+                    <th>{{ 'Permissions' | trans }}</th>
+                    <td class="">
+                        <ul>
+                        {% for role in user.getRoleEntities %}
+                            <li>
+                                <p>{{ role.name }}</p>
+                                <ul>
+                                    {% for permission in role.permissions %}
+                                        <li>{{ permission.name }}</li>
+                                    {% else %}
+                                        {% include '@Admin/' ~ app.request.attributes.get('active_site').templatePath ~ '/no_records_founds.html.twig' with {
+                                            message: 'No permissions found' | trans,
+                                            createRecordRoute: ('ROLE_SUPER_ADMIN' in app.user.roles) ? path('app_permission_admin_new') : null,
+                                            createRecordText: ('ROLE_SUPER_ADMIN' in app.user.roles) ? 'Create permissions' : null
+                                        } %}
+                                    {% endfor %}
+                                </ul>
+
+                            </li>
+
+                        {% else %}
+                            {% include '@Admin/' ~ app.request.attributes.get('active_site').templatePath ~ '/no_records_founds.html.twig' with {
+                                message: 'No permissions found' | trans,
+                                createRecordRoute: path('app_permission_admin_new'),
+                                createRecordText: 'Create permissions' | trans
+                            } %}
+                        {% endfor %}
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>{{ 'Is Verified' | trans }}</th>
+                    <td class="text-end">{{ user.isVerified ? 'Yes' : 'No' }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+{% endblock %}
