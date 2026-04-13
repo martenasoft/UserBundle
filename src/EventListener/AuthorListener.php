@@ -37,7 +37,12 @@ class AuthorListener
         if (!$object instanceof AuthorInterface) {
             return;
         }
+
         $user = $this->security->getUser();
+
+        if (!$user) {
+            return;
+        }
         $object->setAuthor($user->getUuid()->toString());
     }
 }

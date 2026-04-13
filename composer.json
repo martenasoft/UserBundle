@@ -31,12 +31,12 @@
         "symfony/translation-contracts": "^3.5",
         "symfonycasts/reset-password-bundle": "^1.24",
         "symfonycasts/verify-email-bundle": "^1.18",
-        "martenasoft/common_library": "^1.1",
+        "martenasoft/common_library": "^1.0",
         "symfony/mailer": "^8.0",
         "symfony/uid": "^8.0",
         "symfony/validator": "^8.0",
         "doctrine/doctrine-bundle": "^3.2",
         "symfony/form": "^8.0",
-        "martenasoft/sdk_bundle": "^2.0"
+        "martenasoft/sdk_bundle": "^1.0"
     }
 }

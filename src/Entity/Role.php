@@ -4,9 +4,13 @@ namespace MartenaSoft\UserBundle\Entity;
 
 use MartenaSoft\CommonLibrary\Entity\Interfaces\AuthorInterface;
 use MartenaSoft\CommonLibrary\Entity\Traits\AuthorTrait;
+use MartenaSoft\CommonLibrary\Entity\Traits\CreatedAtTrait;
+use MartenaSoft\CommonLibrary\Entity\Traits\DeletedAtTrait;
+use MartenaSoft\CommonLibrary\Entity\Traits\IsDeletedTrait;
 use MartenaSoft\CommonLibrary\Entity\Traits\NameTrait;
 use MartenaSoft\CommonLibrary\Entity\Traits\PostgresIdTrait;
 use MartenaSoft\CommonLibrary\Entity\Traits\SiteIdTrait;
+use MartenaSoft\CommonLibrary\Entity\Traits\UpdatedAtTrait;
 use MartenaSoft\CommonLibrary\Entity\Traits\UuidTrait;
 use MartenaSoft\UserBundle\Repository\RoleRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -22,7 +26,11 @@ class Role implements AuthorInterface
         UuidTrait,
         NameTrait,
         AuthorTrait,
-        SiteIdTrait
+        SiteIdTrait,
+        CreatedAtTrait,
+        UpdatedAtTrait,
+        DeletedAtTrait,
+        IsDeletedTrait
         ;
 
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'roles')]

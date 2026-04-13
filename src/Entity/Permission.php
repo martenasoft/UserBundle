@@ -4,10 +4,14 @@ namespace MartenaSoft\UserBundle\Entity;
 
 use MartenaSoft\CommonLibrary\Entity\Interfaces\AuthorInterface;
 use MartenaSoft\CommonLibrary\Entity\Traits\AuthorTrait;
+use MartenaSoft\CommonLibrary\Entity\Traits\CreatedAtTrait;
+use MartenaSoft\CommonLibrary\Entity\Traits\DeletedAtTrait;
+use MartenaSoft\CommonLibrary\Entity\Traits\IsDeletedTrait;
 use MartenaSoft\CommonLibrary\Entity\Traits\NameTrait;
 use MartenaSoft\CommonLibrary\Entity\Traits\PostgresIdTrait;
 use MartenaSoft\CommonLibrary\Entity\Traits\PreviewTrait;
 use MartenaSoft\CommonLibrary\Entity\Traits\SiteIdTrait;
+use MartenaSoft\CommonLibrary\Entity\Traits\UpdatedAtTrait;
 use MartenaSoft\CommonLibrary\Entity\Traits\UuidTrait;
 use MartenaSoft\UserBundle\Repository\PermissionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -24,7 +28,11 @@ class Permission  implements AuthorInterface
         NameTrait,
         PreviewTrait,
         AuthorTrait,
-        SiteIdTrait
+        SiteIdTrait,
+        IsDeletedTrait,
+        CreatedAtTrait,
+        UpdatedAtTrait,
+        DeletedAtTrait
         ;
 
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'permissions')]

@@ -99,10 +99,6 @@ class AdminLocalVoter extends Voter
                     continue;
                 }
 
-                if ($permission->getPermission() !== DictionaryUser::PERMISSION_PRIVATE_TYPE) {
-                    return $permission;
-                }
-
                 if ($permission->getRoute() === $route) {
                     return $permission;
                 }

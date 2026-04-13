@@ -20,15 +20,13 @@ class PermissionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $routes = $this->routeService->list('/^(app_|menu_)(.*)/');
-        $routes = array_column($routes, 'name');
-        array_unshift($routes, '');
-        $routes = array_combine($routes, $routes);
+        $routesGroups = $this->routeService->rolesDetail($routes);
         $builder
             ->add('name')
             ->add('preview', TextareaType::class)
 
             ->add('route', ChoiceType::class, [
-                'choices' => $routes,
+                'choices' => $routesGroups,
                 'required' => false,
             ])
         ;

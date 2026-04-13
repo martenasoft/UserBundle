@@ -6,11 +6,13 @@ namespace MartenaSoft\UserBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use MartenaSoft\AdminXPlatformBundle\Attribute\AdminXPlatform;
 use MartenaSoft\CommonLibrary\Dictionary\DictionaryUser;
 use MartenaSoft\CommonLibrary\Entity\Interfaces\AuthorInterface;
 use MartenaSoft\CommonLibrary\Entity\Traits\AuthorTrait;
 use MartenaSoft\CommonLibrary\Entity\Traits\CreatedAtTrait;
 use MartenaSoft\CommonLibrary\Entity\Traits\DeletedAtTrait;
+use MartenaSoft\CommonLibrary\Entity\Traits\IsDeletedTrait;
 use MartenaSoft\CommonLibrary\Entity\Traits\PostgresIdTrait;
 use MartenaSoft\CommonLibrary\Entity\Traits\SiteIdTrait;
 use MartenaSoft\CommonLibrary\Entity\Traits\StatusTrait;
@@ -27,10 +29,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 #[ORM\HasLifecycleCallbacks]
+#[AdminXPlatform(title: 'Users')]
 class User implements
     UserInterface,
     PasswordAuthenticatedUserInterface,
-    AuthorInterface,
     RedirectToInterface
 {
     use
@@ -40,7 +42,7 @@ class User implements
         CreatedAtTrait,
         UpdatedAtTrait,
         DeletedAtTrait,
-        AuthorTrait,
+        IsDeletedTrait,
         SiteIdTrait
         ;
 

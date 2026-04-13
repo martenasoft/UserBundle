@@ -2,10 +2,10 @@
 
 namespace MartenaSoft\UserBundle\Service;
 
-use MartenaSoft\SdkBundle\Service\Interfaces\RoleSdkInterface;
+use MartenaSoft\SdkBundle\Service\Interfaces\PermissionSdkInterface;
 use MartenaSoft\UserBundle\Repository\PermissionRepository;
 
-readonly class PermissionSdk implements RoleSdkInterface
+readonly class PermissionSdk implements PermissionSdkInterface
 {
     public function __construct(
         private PermissionRepository $repository,
